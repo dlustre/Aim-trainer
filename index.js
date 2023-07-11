@@ -61,6 +61,9 @@ button.addEventListener('click', function (event) {
 });
 
 button.onclick = function () {
+    const newAudio = new Audio(audio.src);
+    newAudio.play();
+
     clickCount++;
 
     document.getElementById('clickCount').textContent = clickCount;
@@ -100,8 +103,6 @@ button.onclick = function () {
     }, 100);
     button.style.transform = 'translate(' + randomX + 'px, ' + randomY + 'px';
 
-    const newAudio = new Audio(audio.src);
-    newAudio.play();
 }
 
 window.addEventListener('beforeunload', function () {
