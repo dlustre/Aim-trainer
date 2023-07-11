@@ -3,8 +3,14 @@
 // player with most clickcount wins
 
 let clickCount = 0;
+let increasing = true;
+let distance = 50;
+let minDistance = 50;
+let maxDistance = 400;
 
 let button = document.getElementById('targetBtn');
+
+const audio = new Audio('aim-trainer-hitsound.wav');
 
 // Load click count
 if (document.cookie.includes('clickCount=')) {
@@ -59,12 +65,25 @@ button.onclick = function () {
 
     document.getElementById('clickCount').textContent = clickCount;
 
-    let randomX = Math.floor(Math.random() * (300 - (-300) + 1)) + -300;
-    let randomY = Math.floor(Math.random() * (300 - (-300) + 1)) + -300;
+    if (increasing) {
+        distance += 10;
+        if (distance >= maxDistance) {
+            increasing = false;
+        }
+    } else {
+        distance -= 10;
+        if (distance <= minDistance) {
+            increasing = true;
+        }
+    }
+
+
+    let randomX = Math.floor(Math.random() * (distance - (-distance) + 1)) + -distance;
+    let randomY = Math.floor(Math.random() * (distance - (-distance) + 1)) + -distance;
 
     let counter = document.getElementById('clickCount');
 
-    let prevButtonColor = button.style.backgroundImage;
+    // let prevButtonColor = button.style.backgroundImage;
     button.style.backgroundImage = 'none';
     button.style.transition = 'background-image 0.5s'
     counter.style.color = 'white';
@@ -80,6 +99,9 @@ button.onclick = function () {
         counter.style.color = '';
     }, 100);
     button.style.transform = 'translate(' + randomX + 'px, ' + randomY + 'px';
+
+    const newAudio = new Audio(audio.src);
+    newAudio.play();
 }
 
 window.addEventListener('beforeunload', function () {
